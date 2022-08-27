@@ -15,9 +15,11 @@ export default function Home({ exploreData, cardsData }) {
       </Head>
 
       <Header />
+      
       <Banner />
 
       <main className="max-w-7xl mx-auto px-8 sm:px-16">
+
         <section className="pt-6">
           <h1 className="text-4xl font-semibold pb-5 ">Explore Nearby</h1>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-5 my-5">
@@ -49,9 +51,11 @@ export default function Home({ exploreData, cardsData }) {
             buttonText="Get Inspired"
           />
         </section>
+
       </main>
 
       <Footer />
+      
     </div>
   );
 }
