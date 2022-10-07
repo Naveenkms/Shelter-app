@@ -13,7 +13,7 @@ export default function SearchPage({data}) {
   const formattedDate = `${format(new Date(startDate), "dd MMMM yy")} - ${format(new Date(endDate), "dd MMMM yy")}`;
 
   return (
-    <>
+    <div>
       <Header placeholder={`${searchInput} | ${formattedDate} | ${noOfGuests}`}/>
       <main>
         <section>
@@ -37,13 +37,13 @@ export default function SearchPage({data}) {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
 // "https://links.papareact.com/isz"
 export async function getServerSideProps() {
-  const res = await fetch("https://links.papareact.com/isz")
+  const res = await fetch("https://www.jsonkeeper.com/b/5NPS")
   const data = await res.json();
 
   return {

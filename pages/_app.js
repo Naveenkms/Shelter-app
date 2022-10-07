@@ -1,3 +1,4 @@
+import { SessionProvider } from "next-auth/react";
 import '../styles/globals.css'
 import Router from "next/router"
 import ProgressBar from "@badrap/bar-of-progress";
@@ -6,7 +7,10 @@ import { useEffect } from 'react';
 
 
 
-function MyApp({ Component, pageProps }) {
+function MyApp({
+   Component,
+    pageProps: {session, ...pageProps},
+   }) {
   useEffect(() => {
     const progress = new ProgressBar({
       size: 4,
@@ -26,7 +30,11 @@ function MyApp({ Component, pageProps }) {
   },[])
 
   
-  return <Component {...pageProps} />
+  return(
+    <SessionProvider session={session}>
+     <Component {...pageProps} />
+     </SessionProvider>
+  )
 }
 
 export default MyApp

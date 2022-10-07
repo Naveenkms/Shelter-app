@@ -6,15 +6,29 @@ import SmallCard from "../components/SmallCard";
 import MediumCard from "../components/MediumCard";
 import BigCard from "../components/BigCard";
 import Footer from "../components/Footer";
+import { useEffect, useState } from "react";
+import AuthModal from "../components/AuthModal";
+
 
 export default function Home({ exploreData, cardsData }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => setIsOpen(false);
+ 
+  const openModal = () => setIsOpen(true);;
+
+ 
+
   return (
     <div className={styles.container}>
+    
       <Head>
         <title>Airbnb clone</title>
       </Head>
 
-      <Header />
+      <Header openModal={openModal} />
+
+      <AuthModal isOpen = {isOpen} closeModal = {closeModal}/>
       
       <Banner />
 
@@ -61,14 +75,13 @@ export default function Home({ exploreData, cardsData }) {
 }
 
 export async function getStaticProps() {
-  const exploreData = await fetch("https://links.papareact.com/pyp").then(
+  const exploreData = await fetch("https://www.jsonkeeper.com/b/4G1G").then(
     (res) => res.json()
   );
 
-  const cardsData = await fetch("https://links.papareact.com/zp1").then((res) =>
+  const cardsData = await fetch("https://www.jsonkeeper.com/b/VHHT").then((res) =>
     res.json()
   );
-  // s
   return {
     props: {
       exploreData,

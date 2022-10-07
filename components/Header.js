@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter} from "next/router"
+import { useRouter} from "next/router";
+import { useSession } from "next-auth/react"
 
 import {
   SearchIcon,
@@ -9,12 +10,13 @@ import {
   UserCircleIcon,
   UsersIcon,
 } from "@heroicons/react/solid";
+import ProfileDropdownCard from "./ProfileDropdownCard";
 import "react-date-range/dist/styles.css"; //date library main css file
 import "react-date-range/dist/theme/default.css"; //date library theme css file
 import { DateRange } from "react-date-range";
 // import {addDays} from "date-fns";
 
-function Header({placeholder}) {
+function Header({placeholder, openModal}) {
   const [searchInput, setSearchInput] = useState("");
   const [range, setRange] = useState([
     {
@@ -25,11 +27,18 @@ function Header({placeholder}) {
   ]);
   const [noOfGuests, setNoOfGuests] = useState(1);
 
+  const [click, setClick] = useState(false);
+
+  const [inputClick, setInputClick] = useState(false)
+
   const router = useRouter();
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
   };
+
+  const {data: session, status} = useSession();
+  
 
   return (
     <header
@@ -51,25 +60,30 @@ function Header({placeholder}) {
       <div className="flex items-center md:border-2 rounded-full py-2 shadow-sm w-9/12 md:w-full m-auto">
         <input
           onChange={handleChange}
+          onClick={() => setInputClick(prev => !prev)}
           value={searchInput}
           className="flex-grow bg-transparent pl-2 outline-none w-full"
           type="text"
           placeholder={placeholder ? placeholder :"search here"}
         />
-        <SearchIcon className="hidden md:inline-flex h-8 text-white bg-red-400 rounded-full p-2 cursor-pointer mr-2 flex-shrink-0" />
+        <SearchIcon className="hidden md:inline-flex h-8 text-white bg-[#ff385c] rounded-full p-2 cursor-pointer mr-2 flex-shrink-0" />
       </div>
 
       {/* right */}
-      <div className="flex items-center space-x-4 justify-end text-gray-500 cursor-pointer">
-        <p className="hidden md:inline">Become a host</p>
+      <div className="relative flex items-center space-x-4 justify-end text-gray-500 cursor-pointer">
+        <p className="hidden md:inline text-black">Become a host</p>
         <GlobeAltIcon className="h-6" />
-        <div className="flex border-2 p-2 rounded-full ">
+        <div className="flex border-2 p-2 rounded-full hover:shadow-md" onClick={() => setClick(prevState => !prevState)}>
           <MenuIcon className="h-6" />
-          <UserCircleIcon className="h-6" />
+          {session ? <Image src={session.user.image} width="24" height="24" className="rounded-full" />
+                   : <UserCircleIcon className="h-6" />
+           } 
+            
         </div>
+        {click && <ProfileDropdownCard openModal={openModal} />}
       </div>
 
-      {searchInput && (
+      {inputClick && (
         <div className="col-span-3 mx-auto mt-2 sm:mt-0">
           {/* calendar */}
           <DateRange

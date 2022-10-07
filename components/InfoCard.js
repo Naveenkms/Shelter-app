@@ -31,7 +31,7 @@ function InfoCard({ data }) {
           ) : (
             <SolidIcon
               onClick={handleClick}
-              className="h-7 cursor-pointer text-red-500"
+              className="h-7 cursor-pointer text-[#ff385c]"
             />
           )}
         </div>
