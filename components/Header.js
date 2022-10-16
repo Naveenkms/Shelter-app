@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react"
 
 import {
   SearchIcon,
-  GlobeAltIcon,
   MenuIcon,
   UserCircleIcon,
   UsersIcon,
@@ -71,10 +70,8 @@ function Header({placeholder, openModal}) {
 
       {/* right */}
       <div className="relative flex items-center space-x-4 justify-end text-gray-500 cursor-pointer">
-        <p className="hidden md:inline text-black">Become a host</p>
-        <GlobeAltIcon className="h-6" />
         <div className="flex border-2 p-2 rounded-full hover:shadow-md" onClick={() => setClick(prevState => !prevState)}>
-          <MenuIcon className="h-6" />
+          <MenuIcon className="h-6 mr-1" />
           {session ? <Image src={session.user.image} width="24" height="24" className="rounded-full" />
                    : <UserCircleIcon className="h-6" />
            } 
@@ -108,7 +105,7 @@ function Header({placeholder, openModal}) {
           </div>
           {/* cancel & search */}
           <div className="flex justify-around ">
-            <button className="text-gray-500" onClick={() => setSearchInput("")}>Cancel</button>
+            <button className="text-gray-500" onClick={() => setInputClick(prev => !prev)}>Cancel</button>
             
             <button onClick={() => router.push({
               pathname: "/searchPage",

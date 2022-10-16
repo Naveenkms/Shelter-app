@@ -5,16 +5,17 @@ import { HeartIcon as SolidIcon } from "@heroicons/react/solid";
 import { StarIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 
-function InfoCard({ data }) {
+function InfoCard({ data, createCheckoutSession }) {
   const [click, setClick] = useState(false);
 
   const handleClick = () => {
     setClick(!click);
   };
+ 
 
   return (
-    <div className="flex hover:opacity-80 hover:shadow-lg transition duration-200 ease-out pr-4 py-7 px-2 border-b cursor-pointer  first:border-t ">
-      <div className="relative h-24 w-40 md:h-52 md:w-80 flex-shrink-0">
+    <div className="flex flex-col md:flex-row hover:shadow-lg transition duration-200 ease-out pr-4 py-7 px-2 border-b cursor-pointer  first:border-t ">
+      <div className="relative w-full h-52 md:w-80 flex-shrink-0">
         <Image
           src={data.img}
           layout="fill"
@@ -22,7 +23,7 @@ function InfoCard({ data }) {
           className="rounded-2xl"
         />
       </div>
-      <div className=" flex flex-grow flex-col pl-5">
+      <div className=" flex flex-grow flex-col p-5">
         <div className="flex justify-between">
           <p>{data.location}</p>
 
@@ -42,15 +43,19 @@ function InfoCard({ data }) {
 
         <p className="pt-2 text-sm text-gray-500 ">{data.description}</p>
         <div className="flex justify-between flex-grow items-end">
+        <div>
+          <button onClick={() => createCheckoutSession(data._id)} className="w-24 py-2 hover:py-[6px] hover:bg-white hover:text-black hover:border-solid hover:border-black hover:border-2 my-4 rounded-md bg-[#ff385c] text-white">
+            Book
+          </button>
           <p className="flex items-center">
-            <StarIcon className="h-5 text-red-400" />
+            <StarIcon className="h-5" />
             {data.star}
           </p>
+          </div>
           <div>
-            <p className="text-lg md:text-2xl pb-2 font-semibold">
-              {data.price}
+            <p className="text-lg md:text-2xl font-semibold">
+              ₹{data.price}/day
             </p>
-            <p className="text-right font-extralight">{data.total}</p>
           </div>
         </div>
       </div>
