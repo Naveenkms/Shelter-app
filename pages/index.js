@@ -6,19 +6,9 @@ import SmallCard from "../components/SmallCard";
 import MediumCard from "../components/MediumCard";
 import BigCard from "../components/BigCard";
 import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
-import AuthModal from "../components/AuthModal";
 
 
 export default function Home({ exploreData, cardsData }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const closeModal = () => setIsOpen(false);
- 
-  const openModal = () => setIsOpen(true);;
-
- 
-
   return (
     <div className={styles.container}>
     
@@ -26,9 +16,9 @@ export default function Home({ exploreData, cardsData }) {
         <title>Airbnb clone</title>
       </Head>
 
-      <Header openModal={openModal} />
+      <Header />
 
-      <AuthModal isOpen = {isOpen} closeModal = {closeModal}/>
+    
       
       <Banner />
 

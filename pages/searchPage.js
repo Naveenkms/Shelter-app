@@ -1,7 +1,9 @@
-import clientPromise from "../lib/mongodb"
-import { loadStripe } from '@stripe/stripe-js';
+import clientPromise from "../lib/mongodb";
+import { loadStripe } from "@stripe/stripe-js";
 
-import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Header from "../components/Header";
@@ -11,65 +13,115 @@ import Footer from "../components/Footer";
 import { format } from "date-fns";
 import axios from "axios";
 
-
-
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
-export default function SearchPage({data}) {
-  const router= useRouter();
-  const {searchInput, noOfGuests, startDate, endDate} = router.query;
-  const formattedDate = `${format(new Date(startDate), "dd MMMM yy")} - ${format(new Date(endDate), "dd MMMM yy")}`;
-  
+
+export default function SearchPage({ data }) {
+  const { data: session } = useSession();
+  const [wishList, setWishList] = useState([]);
+  const router = useRouter();
+  const { searchInput, noOfGuests, startDate, endDate } = router.query;
+  const formattedDate = `${format(
+    new Date(startDate),
+    "dd MMMM yy"
+  )} - ${format(new Date(endDate), "dd MMMM yy")}`;
   const createCheckoutSession = async (_id) => {
     const stripe = await stripePromise;
-  
-  console.log("hello");
-    const checkoutSession = await axios.post("/api/checkout_sessions",
-    {
+    const checkoutSession = await axios.post("/api/checkout_sessions", {
       _id: _id,
-    })
+    });
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id,
     });
-    console.log(result);
     if (result.error) {
       alert(result.error.message);
     }
-  }
-useEffect(() => {
-  // Check to see if this is a redirect back from Checkout
-  const query = new URLSearchParams(window.location.search);
-  if (query.get('success')) {
-    console.log('Order placed! You will receive an email confirmation.');
+  };
+  useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      console.log("Order placed! You will receive an email confirmation.");
+    }
+
+    if (query.get("canceled")) {
+      console.log(
+        "Order canceled -- continue to shop around and checkout when you’re ready."
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (session) {
+      const getWishListItem = async () => {
+        const result = await axios
+          .get(`/api/get/${session.user.email}`)
+          .then((res) => {
+            return res.data;
+          });
+        setWishList(result.data);
+      };
+      getWishListItem();
+    }
+  }, [session]);
+
+
+  const toggleWishList =  (id, data) => {
+    setWishList(prev => {
+      const isWishListed = prev.find(({productId}) => {
+       return productId === id
+      })
+      // Remove from wishlist
+      if(isWishListed) {
+         axios.delete(`/api/wishLists/${id}/${session.user.email}`) 
+            return prev.filter(({productId}) => productId !== id);
+      }
+      // Add to wishlist
+      else {
+        axios.post("/api/wishLists", {
+          data,
+          email: session.user.email,
+        })
+            return [...prev, {productId: id}];
+      }
+
+    })
   }
 
-  if (query.get('canceled')) {
-    console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
-  }
-}, []);
 
   return (
     <div>
-      <Header placeholder={`${searchInput} | ${formattedDate} | ${noOfGuests}`}/>
+      <Header
+        placeholder={`${searchInput} | ${formattedDate} | ${noOfGuests}`}
+      />
       <main>
         <section>
-          <p className="text-sm"> {formattedDate} stays for {noOfGuests} guests</p>
+          <p className="text-sm">
+            {" "}
+            {formattedDate} stays for {noOfGuests} guests
+          </p>
 
-          <h1 className="text-3xl font-semibold mt-2 mb-4">Stays in {searchInput}</h1>
+          <h1 className="text-3xl font-semibold mt-2 mb-4">
+            Stays in {searchInput}
+          </h1>
 
           <div className="hidden lg:flex mt-2 mb-6 space-x-4">
-          {
-            ["Cancellation Flexibility", "Type of Place", "Price", "Rooms and Beds", "More Filter"].map(filter => (
+            {[
+              "Cancellation Flexibility",
+              "Type of Place",
+              "Price",
+              "Rooms and Beds",
+              "More Filter",
+            ].map((filter) => (
               // eslint-disable-next-line react/jsx-key
-              <p className=" px-4 py-2 border rounded-full cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transform duration-100 ease-out">{filter}</p> 
-
-            ))
-          }
+              <p className=" px-4 py-2 border rounded-full cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transform duration-100 ease-out">
+                {filter}
+              </p>
+            ))}
           </div>
           <div>
-          {data.map(item => (<InfoCard key={item._id} data={item} createCheckoutSession={createCheckoutSession} />)
-          )}
+            {data.map(item => <InfoCard key={item._id} data={item} wishListed={!!wishList.find(({productId}) => productId === item._id)} toggleWishList={toggleWishList} createCheckoutSession={createCheckoutSession}/>)}
           </div>
         </section>
       </main>
@@ -78,7 +130,6 @@ useEffect(() => {
   );
 }
 
-
 export async function getServerSideProps() {
   try {
     const client = await clientPromise;
@@ -86,9 +137,9 @@ export async function getServerSideProps() {
     const db = client.db("test");
 
     const datas = await db.collection("datas").find({}).toArray();
-   
-    const properties = JSON.parse(JSON.stringify(datas))
-    const filtered = properties.map(property => {
+
+    const properties = JSON.parse(JSON.stringify(datas));
+    const filtered = properties.map((property) => {
       const star = JSON.parse(JSON.stringify(property.star));
 
       return {
@@ -101,13 +152,12 @@ export async function getServerSideProps() {
         price: property.price,
         star: star.$numberDecimal,
         title: property.title,
-      }
-    })
-  
-    return {
-      props: { data: filtered }
-    }
+      };
+    });
 
+    return {
+      props: { data: filtered },
+    };
   } catch (err) {
     console.log(err);
   }

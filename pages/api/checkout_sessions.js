@@ -1,5 +1,5 @@
 import clientPromise from "../../lib/mongodb";
-import { ObjectId } from "mongodb"
+import { ObjectId } from "mongodb";
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
         const client = await clientPromise;
         const db = client.db("test");
-        const collection = db.collection("datas")
+        const collection = db.collection("datas");
         const id = req.body._id;
         const result = await (await collection.findOne({_id: new ObjectId(id)}));
         // client.close()

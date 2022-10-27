@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter} from "next/router";
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
+import AuthModal from "../components/AuthModal";
 
 import {
   SearchIcon,
@@ -15,7 +16,10 @@ import "react-date-range/dist/theme/default.css"; //date library theme css file
 import { DateRange } from "react-date-range";
 // import {addDays} from "date-fns";
 
-function Header({placeholder, openModal}) {
+function Header({placeholder}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  
   const [searchInput, setSearchInput] = useState("");
   const [range, setRange] = useState([
     {
@@ -37,6 +41,10 @@ function Header({placeholder, openModal}) {
   };
 
   const {data: session, status} = useSession();
+
+  const closeModal = () => setIsOpen(false);
+ 
+  const openModal = () => setIsOpen(true);;
   
 
   return (
@@ -78,6 +86,7 @@ function Header({placeholder, openModal}) {
             
         </div>
         {click && <ProfileDropdownCard openModal={openModal} />}
+        <AuthModal isOpen = {isOpen} closeModal = {closeModal}/>
       </div>
 
       {inputClick && (
