@@ -114,7 +114,6 @@ export default function SearchPage({ data }) {
               "Rooms and Beds",
               "More Filter",
             ].map((filter) => (
-              // eslint-disable-next-line react/jsx-key
               <p className=" px-4 py-2 border rounded-full cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transform duration-100 ease-out">
                 {filter}
               </p>
