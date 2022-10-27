@@ -21,7 +21,7 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-const wishList = ({data}) => {
+export default function wishList ({data}) {
   const { data: session } = useSession();
   const [wishList, setWishList] = useState(data);
 
@@ -73,8 +73,6 @@ const wishList = ({data}) => {
     </div>
   )
 }
-
-export default wishList;
 
 export async function getServerSideProps(context) {
   try {
