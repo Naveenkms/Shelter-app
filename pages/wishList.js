@@ -21,9 +21,11 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-export default function wishList ({data}) {
-  const { data: session } = useSession();
+export default function WishList ({data}) {
   const [wishList, setWishList] = useState(data);
+
+  const { data: session } = useSession();
+
 
   const isEmpty = data.length === 0;
 
