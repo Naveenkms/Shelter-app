@@ -40,7 +40,7 @@ function Header({placeholder}) {
     setSearchInput(e.target.value);
   };
 
-  const {data: session, status} = useSession();
+  const {data: session} = useSession();
 
   const closeModal = () => setIsOpen(false);
  
@@ -55,7 +55,7 @@ function Header({placeholder}) {
       {/* left-logo */}
       <div onClick={() => router.push("/")}  className="relative flex items-center h-10 cursor-pointer">
         <Image 
-          src="https://links.papareact.com/qd3"
+          src="https://seeklogo.com/images/A/airbnb-logo-3023AC4CBA-seeklogo.com.png"
           layout="fill"
           objectFit="contain"
           objectPosition="left"

@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["jsonkeeper.com", "links.papareact.com","lh3.googleusercontent.com"]
+    domains: ["jsonkeeper.com","lh3.googleusercontent.com","images.pexels.com","seeklogo.com"]
   }
 }
 
