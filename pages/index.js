@@ -13,6 +13,7 @@ export default function Home({ exploreData, cardsData }) {
     <div className={styles.container}>
     
       <Head>
+      <meta name="google-site-verification" content="mJTNjd0R12pInGPFlVdPEzc05DnabgetzaiTDkhIbLk" />
         <title>Airbnb clone</title>
       </Head>
 
