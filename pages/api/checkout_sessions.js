@@ -31,8 +31,8 @@ export default async function handler(req, res) {
           },
         ],
         mode: 'payment',
-        success_url: `${process.env.HOST}/book`,
-        cancel_url: `${process.env.HOST}/book`,
+        success_url: `${process.env.HOST}/success`,
+        cancel_url: `${process.env.HOST}/searchPage`,
       });
       // res.redirect(303, session.url);
       res.json({ id: session.id });

@@ -1,6 +1,8 @@
- import Image from "next/image"
+ import Image from "next/image";
+ import { useRouter } from "next/router";
 
 function BigCard({img, title, description, buttonText}) {
+  const router = useRouter();
   return (
     <div className="relative py-16">
         <div className="relative h-96 min-w-[300px]">
@@ -12,7 +14,7 @@ function BigCard({img, title, description, buttonText}) {
             <h3 className="text-4xl mb-3 w-64">{title}</h3>
             <p>{description}</p>
 
-            <button className="text-sm bg-gray-900 px-4 py-2 rounded-lg mt-5">{buttonText}</button>
+            <button onClick={() => router.push("/searchPage")} className="text-sm bg-gray-900 px-4 py-2 rounded-lg mt-5">{buttonText}</button>
         </div>
     </div>
   )

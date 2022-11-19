@@ -1,8 +1,8 @@
-import Image from "next/image"
+import Image from "next/image";
 
 function MediumCard({img, title}) {
   return (
-    <div className="cursor-pointer hover:scale-105 transition duration-300 ease-out">
+    <div className="cursor-pointer hover:scale-105 hover:text-primary-color transition duration-300 ease-out">
       <div className="relative h-80 w-80">
         <Image src={img} layout="fill" alt="images of different places" className="rounded-xl"
         />

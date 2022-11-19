@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Header from "../components/Header";
+import SearchInputDisplay from "../components/SearchInputDisplay";
 import InfoCard from "../components/InfoCard";
 import Footer from "../components/Footer";
 
-import { format } from "date-fns";
+import dateFormat from "../util/dateFormat";
+
 import axios from "axios";
 
 const stripePromise = loadStripe(
@@ -21,11 +23,7 @@ export default function SearchPage({ data }) {
   const { data: session } = useSession();
   const [wishList, setWishList] = useState([]);
   const router = useRouter();
-  const { searchInput, noOfGuests, startDate, endDate } = router.query;
-  const formattedDate = `${format(
-    new Date(startDate),
-    "dd MMMM yy"
-  )} - ${format(new Date(endDate), "dd MMMM yy")}`;
+  const {searchInput, noOfGuests} = router.query;
   const createCheckoutSession = async (_id) => {
     const stripe = await stripePromise;
     const checkoutSession = await axios.post("/api/checkout_sessions", {
@@ -93,18 +91,14 @@ export default function SearchPage({ data }) {
   return (
     <div>
       <Header
-        placeholder={`${searchInput} | ${formattedDate} | ${noOfGuests}`}
+        placeholder= "Search Place"
       />
       <main>
-        <section>
-          <p className="text-sm">
-            {" "}
-            {formattedDate} stays for {noOfGuests} guests
-          </p>
-
-          <h1 className="text-3xl font-semibold mt-2 mb-4">
-            Stays in {searchInput}
-          </h1>
+        <section className="p-5 md:px-10">
+   
+        <SearchInputDisplay query={router.query}/>
+         
+         
 
           <div className="hidden lg:flex mt-2 mb-6 space-x-4">
             {[

@@ -5,6 +5,7 @@ import { StarIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import AuthModal from "./AuthModal";
+import BookBtn from "./BookBtn";
 
 function InfoCard({ data, wishListed=false, toggleWishList, createCheckoutSession }) {
   const { data: session } = useSession();
@@ -15,7 +16,7 @@ function InfoCard({ data, wishListed=false, toggleWishList, createCheckoutSessio
 
 
   return (
-    <div className="flex flex-col md:flex-row hover:shadow-lg transition duration-200 ease-out pr-4 py-7 px-2 border-b cursor-pointer  first:border-t ">
+    <div className="flex flex-col md:flex-row hover:shadow-lg transition duration-200 ease-out border-b cursor-pointer  first:border-t ">
       <div className="relative w-full h-52 md:w-80 flex-shrink-0">
         <Image
           src={data.img}
@@ -55,12 +56,7 @@ function InfoCard({ data, wishListed=false, toggleWishList, createCheckoutSessio
         <p className="pt-2 text-sm text-gray-500 ">{data.description}</p>
         <div className="flex justify-between flex-grow items-end">
           <div>
-            <button
-              onClick={() => createCheckoutSession(data._id)}
-              className="w-24 py-2 hover:py-[6px] hover:bg-white hover:text-black hover:border-solid hover:border-black hover:border-2 my-4 rounded-md bg-[#ff385c] text-white"
-            >
-              Book
-            </button>
+           <BookBtn createCheckoutSession={createCheckoutSession} id={data._id}/>
             <p className="flex items-center">
               <StarIcon className="h-5" />
               {data.star}

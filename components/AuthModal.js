@@ -5,17 +5,19 @@ import { Fragment, useState } from "react";
 import { XIcon } from "@heroicons/react/outline";
 
 const AuthModal = ({ isOpen, closeModal }) => {
-  const [email, setEmail] = useState(" ")
+  const [email, setEmail] = useState(" ");
+  const [click, setClick] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
   
     if (!email) return false;
 
     signIn("email", { email, redirect: false });
+    setClick(true)
   };
 
     const handleChange = (e) => {
-      setEmail(e.target.value)
+      setEmail(e.target.value);
     }
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -62,9 +64,9 @@ const AuthModal = ({ isOpen, closeModal }) => {
                       className="w-full inline-flex justify-center rounded-md border  bg-blue-50 px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 text-center"
                     />
                     <button
-                      className="w-full mt-6 inline-flex justify-center rounded-md border border-transparent bg-[#ff385c] px-4 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className={`${click && email !== " " ? "bg-blue-800" : "bg-primary-color"} w-full mt-6 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
                     >
-                      Verify With Email
+                      {click && email !== " " ? "Check Your Email" : "Verify With Email"}
                     </button>
                   </form>
                 

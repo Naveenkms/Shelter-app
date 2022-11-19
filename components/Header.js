@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter} from "next/router";
 import { useSession } from "next-auth/react";
 import AuthModal from "../components/AuthModal";
+
+import Logo from "./Logo";
 
 import {
   SearchIcon,
@@ -53,15 +55,7 @@ function Header({placeholder}) {
     bg-white shadow-md p-5 md:px-10 "
     >
       {/* left-logo */}
-      <div onClick={() => router.push("/")}  className="relative flex items-center h-10 cursor-pointer">
-        <Image 
-          src="https://seeklogo.com/images/A/airbnb-logo-3023AC4CBA-seeklogo.com.png"
-          layout="fill"
-          objectFit="contain"
-          objectPosition="left"
-          alt="logo"
-        />
-      </div>
+      <Logo />
 
       {/* middle-search */}
       <div className="flex items-center md:border-2 rounded-full py-2 shadow-sm w-9/12 md:w-full m-auto">
@@ -71,9 +65,17 @@ function Header({placeholder}) {
           value={searchInput}
           className="flex-grow bg-transparent pl-2 outline-none w-full"
           type="text"
-          placeholder={placeholder ? placeholder :"search here"}
+          placeholder={placeholder}
         />
-        <SearchIcon className="hidden md:inline-flex h-8 text-white bg-[#ff385c] rounded-full p-2 cursor-pointer mr-2 flex-shrink-0" />
+        <SearchIcon onClick={() => router.push({
+          pathname: "/searchPage",
+          query: {
+            searchInput,
+            noOfGuests,
+            startDate: range[0].startDate.toISOString(),
+            endDate: range[0].endDate.toISOString()
+          }
+        })} className="hidden md:inline-flex h-8 text-white bg-primary-color rounded-full p-2 cursor-pointer mr-2 flex-shrink-0" />
       </div>
 
       {/* right */}
@@ -96,7 +98,7 @@ function Header({placeholder}) {
             ranges={range}
             onChange={(item) => setRange([item.selection])}
             minDate={new Date()}
-            rangeColors={["#FD5B61"]}
+            rangeColors={["#ff385c"]}
           />
           {/* Guest number */}
           <div className="flex justify-between items-center mb-4">
@@ -104,7 +106,7 @@ function Header({placeholder}) {
             <div className="flex items-center">
               <UsersIcon className="h-5" />
               <input
-                className="outline-none w-12 pl-2 text-lg text-red-400"
+                className="outline-none w-12 pl-2 text-lg text-[#ff385c]"
                 onChange={(e) => setNoOfGuests(e.target.value)}
                 value={noOfGuests}
                 type="number"
@@ -124,7 +126,7 @@ function Header({placeholder}) {
                 startDate: range[0].startDate.toISOString(),
                 endDate: range[0].endDate.toISOString()
               }
-            })} className="text-red-400" >Search</button>
+            })} className="text-[#ff385c]" >Search</button>
             
           </div>
         </div>
