@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Header from "../components/Header";
+import AuthModal from "../components/AuthModal";
 import SearchInputDisplay from "../components/SearchInputDisplay";
 import InfoCard from "../components/InfoCard";
 import Footer from "../components/Footer";
-
-import dateFormat from "../util/dateFormat";
+ 
 
 import axios from "axios";
 
@@ -21,6 +21,7 @@ const stripePromise = loadStripe(
 
 export default function SearchPage({ data }) {
   const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
   const [wishList, setWishList] = useState([]);
   const router = useRouter();
   const {searchInput, noOfGuests} = router.query;
@@ -36,6 +37,11 @@ export default function SearchPage({ data }) {
       alert(result.error.message);
     }
   };
+
+  const closeModal = () => setIsOpen(false);
+ 
+  const openModal = () => setIsOpen(true);;
+
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
@@ -61,7 +67,7 @@ export default function SearchPage({ data }) {
         setWishList(result.data);
       };
       getWishListItem();
-    }
+    } 
   }, [session]);
 
 
@@ -98,6 +104,7 @@ export default function SearchPage({ data }) {
    
         <SearchInputDisplay query={router.query}/>
          
+        <AuthModal isOpen = {isOpen} closeModal = {closeModal} />
          
 
           <div className="hidden lg:flex mt-2 mb-6 space-x-4">

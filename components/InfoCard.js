@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { HeartIcon as OutlineIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import AuthModal from "./AuthModal";
 import BookBtn from "./BookBtn";
@@ -56,7 +56,7 @@ function InfoCard({ data, wishListed=false, toggleWishList, createCheckoutSessio
         <p className="pt-2 text-sm text-gray-500 ">{data.description}</p>
         <div className="flex justify-between flex-grow items-end">
           <div>
-           <BookBtn createCheckoutSession={createCheckoutSession} id={data._id}/>
+           <BookBtn createCheckoutSession={createCheckoutSession} id={data._id} openModal={openModal} session={session}/>
             <p className="flex items-center">
               <StarIcon className="h-5" />
               {data.star}
