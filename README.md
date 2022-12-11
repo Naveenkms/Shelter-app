@@ -5,6 +5,8 @@ Shelter is an app where users can book houses.
 
 ## Screenshots
 
+![App Screenshot](https://i.postimg.cc/YSgbKnkX/airbnb-clone.png)
+
 ![App Screenshot](https://naveenkms.github.io/my-portfolio/assets/project-img/shelter-app.png)
 
 
