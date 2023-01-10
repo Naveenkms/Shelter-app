@@ -51,7 +51,7 @@ function Header({placeholder}) {
 
   return (
     <header
-      className="fixed w-full top-0 z-50 grid grid-cols-3 
+      className="sticky w-full top-0 z-50 grid grid-cols-3 
     bg-white/0 p-5 md:px-10 "
     >
       {/* left-logo */}
