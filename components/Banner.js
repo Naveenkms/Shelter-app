@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { useRouter} from "next/router";
+import Link from 'next/link'
 function Banner() {
-  const router = useRouter();
   return (
     <div
       className="relative h-[300px] sm:h-[400px]
@@ -13,16 +12,17 @@ function Banner() {
         objectFit="cover"
         alt="banner image"
         priority
+        className=""
       />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-        <p className="text-sm sm:text-lg lg:text-4xl text-primary-color">Not sure where to go?</p>
-        <button  onClick={() => router.push({
-          pathname: "/searchPage"
-        })}
-          className="text-purple-500 bg-white px-10 py-4
-         rounded-full shadow-md font-bold my-3 lg:mt-16 hover:shadow-xl active:scale-90 transition duration-150 "
+        <p className="text-4xl md:text-6xl lg:text-8xl 2xl:text-9xl text-slate-50">Your travel is our journey</p>
+        <button
+          className="text-primary-color border-y-2 border-white text-2xl
+          shadow-md font-bold my-6 lg:mt-16 hover:border-slate-400 active:scale-90 transition duration-150 "
         >
+        <Link href="/searchPage">
           lets explore
+          </Link>
         </button>
       </div>
     </div>

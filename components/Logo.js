@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { useRouter} from "next/router";
+import Link from 'next/link'
 
 const Logo = () => {
-    const router = useRouter();
   return (
-    <div onClick={() => router.push("/")}  className="relative flex items-center h-10 cursor-pointer">
+    <div  className="relative flex items-center h-10 cursor-pointer">
+    <Link href="/">
     <Image 
       src="/shelter.png"
       layout="fill"
@@ -12,6 +12,7 @@ const Logo = () => {
       objectPosition="left"
       alt="logo"
     />
+    </Link>
   </div>
   )
 }

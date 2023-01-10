@@ -51,8 +51,8 @@ function Header({placeholder}) {
 
   return (
     <header
-      className="sticky top-0 z-50 grid grid-cols-3 
-    bg-white shadow-md p-5 md:px-10 "
+      className="fixed w-full top-0 z-50 grid grid-cols-3 
+    bg-white/0 p-5 md:px-10 "
     >
       {/* left-logo */}
       <Logo />
@@ -63,7 +63,7 @@ function Header({placeholder}) {
           onChange={handleChange}
           onClick={() => setInputClick(prev => !prev)}
           value={searchInput}
-          className="flex-grow bg-transparent pl-2 outline-none w-full"
+          className="flex-grow text-primary-color placeholder:text-primary-color placeholder:text-center bg-transparent outline-none w-full"
           type="text"
           placeholder={placeholder}
         />
@@ -80,10 +80,10 @@ function Header({placeholder}) {
 
       {/* right */}
       <div className="relative flex items-center space-x-4 justify-end text-gray-500 cursor-pointer">
-        <div className="flex border-2 p-2 rounded-full hover:shadow-md" onClick={() => setClick(prevState => !prevState)}>
-          <MenuIcon className="h-6 mr-1" />
+        <div className="flex border-2 border-slate-200 border-solid hover:border-primary-color hover:border-dashed transition duration-150 p-2 rounded-full hover:shadow-md" onClick={() => setClick(prevState => !prevState)}>
+          <MenuIcon className="h-6 mr-1 text-primary-color" />
           {session ? <Image src={session.user.image} width="24" height="24" className="rounded-full" />
-                   : <UserCircleIcon className="h-6" />
+                   : <UserCircleIcon className="h-6 text-slate-200" />
            } 
             
         </div>
@@ -102,9 +102,9 @@ function Header({placeholder}) {
           />
           {/* Guest number */}
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Number of guests</h2>
+            <h2 className="text-2xl text-primary-color font-semibold">Number of guests</h2>
             <div className="flex items-center">
-              <UsersIcon className="h-5" />
+              <UsersIcon className="h-5 text-primary-color mr-2" />
               <input
                 className="outline-none w-12 pl-2 text-lg text-[#ff385c]"
                 onChange={(e) => setNoOfGuests(e.target.value)}
@@ -115,8 +115,8 @@ function Header({placeholder}) {
             </div>
           </div>
           {/* cancel & search */}
-          <div className="flex justify-around ">
-            <button className="text-gray-500" onClick={() => setInputClick(prev => !prev)}>Cancel</button>
+          <div className="flex font-bold justify-around ">
+            <button className="text-primary-color" onClick={() => setInputClick(prev => !prev)}>Cancel</button>
             
             <button onClick={() => router.push({
               pathname: "/searchPage",
