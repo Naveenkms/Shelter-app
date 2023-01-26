@@ -9,7 +9,7 @@ https://shelter-app-ecommerce.vercel.app
 
 ## Screenshots
 
-![App Screenshot](https://i.postimg.cc/YSgbKnkX/airbnb-clone.png)
+![App Screenshot](https://i.postimg.cc/cHD6Q0Py/shelter-ss.png)
 
 ![App Screenshot](https://naveenkms.github.io/my-portfolio/assets/project-img/shelter-app.png)
 
