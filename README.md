@@ -13,6 +13,13 @@ https://shelter-app-ecommerce.vercel.app
 
 ![App Screenshot](https://naveenkms.github.io/my-portfolio/assets/project-img/shelter-app.png)
 
+## Features
+
+- Users can book and wishlist their favorite hotels
+- Modern and interactive UI
+- Secured payment with Stripe
+- User Login
+
 
 ## Tech Stack
 
