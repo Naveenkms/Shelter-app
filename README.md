@@ -2,6 +2,10 @@
 
 Shelter is an app where users can book houses.
 
+## Live Demo
+
+https://shelter-app-ecommerce.vercel.app
+
 
 ## Screenshots
 
